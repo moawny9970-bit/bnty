@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" translate="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❤️</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Cairo', sans-serif;
+            background: #0b0b0f;
+            color: #ddd;
+            overflow: hidden;
+            direction: rtl; /* لضمان اتجاه النص العربي */
+        }
+
+        /* 🎬 Loading - تحسين الحركة لتصبح أبطأ */
+        #loading {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 999;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #ff4d6d;
+            border-radius: 50%;
+            animation: grow 3.5s ease-in-out forwards; /* أبطأ */
+        }
+
+        #loading p {
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeInText 2s ease-in forwards;
+            animation-delay: 1s;
+        }
+
+        @keyframes grow {
+            0% { transform: scale(1); }
+            100% { transform: scale(60); opacity: 0; }
+        }
+
+        @keyframes fadeInText {
+            to { opacity: 1; }
+        }
+
+        /* 📱 Sections */
+        .section {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            animation: fade 0.8s ease-out;
+        }
+
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 🔐 Keypad */
+        .keys {
+            display: grid;
+            grid-template-columns: repeat(3, 70px);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .key {
+            padding: 20px;
+            background: #1a1a1f;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #333;
+            transition: 0.2s;
+        }
+
+        .key:active { background: #ff4d6d; transform: scale(0.9); }
+
+        #display {
+            font-size: 24px;
+            height: 30px;
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+            color: #ff4d6d;
+        }
+
+        /* 😏 Buttons */
+        .btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 12px 30px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            margin: 10px;
+            cursor: pointer;
+            transition: .3s;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn:hover { transform: scale(1.05); background: #ff4d6d; }
+
+        /* ❤️ Floating Hearts */
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            pointer-events: none;
+            animation: float 2s ease-out forwards;
+            z-index: 100;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-500px) scale(1.5); opacity: 0; }
+        }
+        
+        #error { color: #ff4d6d; margin-top: 10px; height: 20px; }
+        
+        img { border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+    </style>
+</head>
+
+<body>
+
+<div id="loading">
+    <div class="dot"></div>
+    <p>في حكاية بدأت من غير ما ناخد بالنا… ❤️</p>
+</div>
+
+<div id="lock" class="section">
+    <p>المكان ده لينا بس 🤍</p>
+    <div id="display"></div>
+    <div class="keys">
+        <div class="key">1</div><div class="key">2</div><div class="key">3</div>
+        <div class="key">4</div><div class="key">5</div><div class="key">6</div>
+        <div class="key">7</div><div class="key">8</div><div class="key">9</div>
+        <div style="grid-column: 2;" class="key">0</div>
+    </div>
+    <p id="error"></p>
+</div>
+
+<div id="message" class="section"></div>
+
+<div id="kiss" class="section">
+    <p id="kissText">مش هتعدي غير لما تديني بوسة 😏</p>
+    <button class="btn" onclick="giveKiss()">امواااه 💋</button>
+    <button class="btn" onclick="noKiss()">لا 😕</button>
+</div>
+
+<div id="audioSection" class="section">
+    <p>دوسي هنا 🎧</p>
+    <button class="btn" onclick="playSong()">تشغيل الأغنية</button>
+    <audio id="song" src="song.mp3"></audio>
+</div>
+
+<div id="gallery" class="section">
+    <img id="imgDisplay" src="img1.jpg" width="80%" alt="Moment">
+</div>
+
+<div id="book" class="section">
+    <p id="pageContent" style="font-size: 22px;"></p>
+    <button class="btn" onclick="nextPage()">اقلب الصفحة</button>
+</div>
+
+<div id="counter" class="section">
+    <p id="timeText" style="line-height: 2;"></p>
+    <button class="btn" onclick="increaseLove()">بتحبني قد إيه؟</button>
+    <p id="loveCountDisplay" style="font-size: 24px; color: #ff4d6d;"></p>
+</div>
+
+<script>
+// Elements
+const loading = document.getElementById('loading');
+const lock = document.getElementById('lock');
+const messageSec = document.getElementById('message');
+const display = document.getElementById('display');
+const error = document.getElementById('error');
+
+// 🎬 Start App
+setTimeout(() => {
+    loading.style.display = "none";
+    showSection(lock);
+}, 4000); // وقت أطول ليناسب حركة النقطة
+
+function showSection(sec) {
+    document.querySelectorAll(".section").forEach(s => s.style.display = "none");
+    sec.style.display = "flex";
+}
+
+// 🔐 Lock Logic
+let pass = "2024326";
+let input = "";
+document.querySelectorAll(".key").forEach(k => {
+    k.onclick = () => {
+        input += k.innerText;
+        display.innerText = "*".repeat(input.length); // إظهار نجوم بدل الأرقام للخصوصية
+
+        if (input.length === pass.length) {
+            if (input === pass) {
+                showSection(messageSec);
+                startMsg();
+            } else {
+                error.innerText = "الباسورد غلط 😏";
+                input = ""; 
+                display.innerText = "";
+                setTimeout(() => { error.innerText = ""; }, 2000);
+            }
+        }
+    };
+});
+
+// 💌 Messages Logic
+let msgs = ["فاكرة أول مرة؟", "أنا بحبك بجد ❤️", "أنتي أجمل حاجة حصلتلي..", "كملي..."];
+function startMsg() {
+    let i = 0;
+    let interval = setInterval(() => {
+        if (i < msgs.length) {
+            let p = document.createElement("p");
+            p.innerText = msgs[i++];
+            p.style.margin = "10px";
+            messageSec.appendChild(p);
+        } else {
+            clearInterval(interval);
+            setTimeout(() => showSection(document.getElementById('kiss')), 2000);
+        }
+    }, 1800);
+}
+
+// 😏 Kiss Logic
+let kissCount = 0;
+function giveKiss() {
+    kissCount++;
+    for (let i = 0; i < 15; i++) {
+        createHeart();
+    }
+    if (kissCount >= 3) {
+        showSection(document.getElementById('audioSection'));
+    } else {
+        document.getElementById('kissText').innerText = "كمان واحدة.. طمعان 😂";
+    }
+}
+
+function createHeart() {
+    let h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = "❤️";
+    h.style.left = Math.random() * 100 + "%";
+    h.style.fontSize = (Math.random() * 20 + 20) + "px";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 2000);
+}
+
+function noKiss() { alert("مفيش لا، غصب عنك 😂"); }
+
+// 🎵 Audio & Gallery
+function playSong() {
+    const song = document.getElementById('song');
+    song.play().catch(e => console.log("Audio play blocked"));
+    showSection(document.getElementById('gallery'));
+    startGallery();
+}
+
+let imgs = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg"]; // تأكد من وجود الصور
+function startGallery() {
+    let imgEl = document.getElementById('imgDisplay');
+    let i = 0;
+    let gInterval = setInterval(() => {
+        i = (i + 1) % imgs.length;
+        imgEl.src = imgs[i];
+    }, 2500);
+
+    setTimeout(() => {
+        clearInterval(gInterval);
+        showSection(document.getElementById('book'));
+        nextPage();
+    }, 12000);
+}
+
+// 📖 Book Logic
+let pages = ["البداية كانت صدفة..", "والصدفة بقت حب..", "والحب بقى حياة..", "أنا وأنتي سوا للأبد ❤️"];
+let currentPage = 0;
+function nextPage() {
+    let pContent = document.getElementById('pageContent');
+    if (currentPage < pages.length) {
+        pContent.innerText = pages[currentPage++];
+    } else {
+        showSection(document.getElementById('counter'));
+    }
+}
+
+// ⏳ Love Counter
+let startDate = new Date("2024-03-26T00:00:00");
+setInterval(() => {
+    let now = new Date();
+    let diff = now - startDate;
+
+    let d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    let h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    let m = Math.floor((diff / (1000 * 60)) % 60);
+    let s = Math.floor((diff / 1000) % 60);
+
+    document.getElementById('timeText').innerHTML = `بقالي معاكي:<br>${d} يوم و ${h} ساعة<br>${m} دقيقة و ${s} ثانية ❤️`;
+}, 1000);
+
+let lovePoints = parseInt(localStorage.getItem("love")) || 0;
+document.getElementById('loveCountDisplay').innerText = lovePoints;
+
+function increaseLove() {
+    lovePoints += 100;
+    localStorage.setItem("love", lovePoints);
+    document.getElementById('loveCountDisplay').innerText = lovePoints + " حب";
+    createHeart();
+}
+
+// 🔙 Welcome Back
+window.onload = () => {
+    if (localStorage.getItem("visited")) {
+        console.log("Welcome back");
+    }
+    localStorage.setItem("visited", "true");
+};
+</script>
+
+</body>
+</html>
+
